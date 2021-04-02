@@ -11,38 +11,51 @@
 |
 */
 
+Route::group(['prefix' => 'belajar'], function(){
+
+    Route::get('/mahasiswa', function(){
+        echo 'Mahasiswa';
+    });
+    
+    Route::get('/ubg/ilkom/mahasiswa', function(){
+        return 'Mahasiswa Ilkom Kampus UBG';
+    });
+    
+    // Routing Dengan Parameter
+    Route::get('/ubg/ilkom/mahasiswa/{semester}/{nim}', function($semester, $nim){
+        return 'Mahasiswa Ilkom Kampus UBG, SEMESTER : ' . $semester . ' NIM : ' . $nim;
+    });
+    
+    // Route Redirect
+    Route::redirect('/login', '/masuk');
+    
+    // Route Group
+    Route::group(['prefix' => '/admin'], function(){
+    
+        Route::get('/mahasiswa', function(){
+            return 'Admin Mahasiswa';
+        });
+        Route::get('/dosen', function(){
+            return 'Admin Dosen';
+        });
+        Route::get('/pegawai', function(){
+            return 'Admin Pegawai';
+        });
+    });
+});
+
 // Routing Default
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/mahasiswa', function(){
-    echo 'Mahasiswa';
+Route::get('/home', function () {
+    return view('index');
 });
-
-Route::get('/ubg/ilkom/mahasiswa', function(){
-    return 'Mahasiswa Ilkom Kampus UBG';
+Route::get('/kontak/{hp}', function ($hp) {
+    return view('kontak', ['handphone' => $hp]);
 });
-
-// Routing Dengan Parameter
-Route::get('/ubg/ilkom/mahasiswa/{semester}/{nim}', function($semester, $nim){
-    return 'Mahasiswa Ilkom Kampus UBG, SEMESTER : ' . $semester . ' NIM : ' . $nim;
-});
-
-// Route Redirect
-Route::redirect('/login', '/masuk');
-
-// Route Group
-Route::group(['prefix' => '/admin'], function(){
-
-    Route::get('/mahasiswa', function(){
-        return 'Admin Mahasiswa';
-    });
-    Route::get('/dosen', function(){
-        return 'Admin Dosen';
-    });
-    Route::get('/pegawai', function(){
-        return 'Admin Pegawai';
-    });
+Route::get('/tentang-kami', function () {
+    return view('tentang');
 });
 
